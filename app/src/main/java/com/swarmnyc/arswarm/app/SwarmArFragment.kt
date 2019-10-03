@@ -1,5 +1,6 @@
 package com.swarmnyc.arswarm.app
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -11,7 +12,8 @@ import com.swarmnyc.arswarm.ar.ArResources
 import com.swarmnyc.arswarm.ar.SwarmAnchorNode
 import com.swarmnyc.arswarm.utils.Logger
 
-class SwarmArFragment : ArFragment() {
+@SuppressLint("ValidFragment")
+class SwarmArFragment(private val selection:String) : ArFragment() {
     private val trackableMap = mutableMapOf<String, AugmentedImageAnchorNode>()
 
     var setOnStarted: (() -> Unit)? = null
@@ -30,7 +32,7 @@ class SwarmArFragment : ArFragment() {
 
         arSceneView.scene.addOnUpdateListener(::onUpdateFrame)
 
-        ArResources.init(this.context!!).handle { _, _ ->
+        ArResources.init(this.context!!, this.selection).handle { _, _ ->
             setOnStarted?.invoke()
 
             view.visibility = View.VISIBLE
@@ -61,10 +63,25 @@ class SwarmArFragment : ArFragment() {
         Logger.d("create : ${image.name}(${image.index}), pose: ${image.centerPose}, ex: ${image.extentX}, ez: ${image.extentZ}")
 
         when (image.name) {
-            "swarm" -> {
-                val node = SwarmAnchorNode().init(image)
-                trackableMap[image.name] = node
-                arSceneView.scene.addChild(node)
+            this.selection -> {
+                when(image.name) {
+                    "pez.jpeg" -> {
+                        val node = SwarmAnchorNode(1.3F, 2F).init(image)
+                        trackableMap[image.name] = node
+                        arSceneView.scene.addChild(node)
+                    }
+                    "paloma.jpg" -> {
+                        val node = SwarmAnchorNode(1.3F, 1.1F).init(image)
+                        trackableMap[image.name] = node
+                        arSceneView.scene.addChild(node)
+                    }
+                    "catrinas.jpg" -> {
+                        val node = SwarmAnchorNode(1.3F, 1.5F).init(image)
+                        trackableMap[image.name] = node
+                        arSceneView.scene.addChild(node)
+                    }
+                }
+
 
                 Toast.makeText(context, "${image.name} added", Toast.LENGTH_LONG).show()
             }
@@ -92,7 +109,7 @@ class SwarmArFragment : ArFragment() {
                     Logger.d("remove node: ${image.name}(${image.index})")
                     Toast.makeText(context, "${image.name} removed", Toast.LENGTH_LONG).show()
 
-                    trackableMap.remove(image.name).let {
+                        trackableMap.remove(image.name).let {
                         arSceneView.scene.removeChild(it)
                     }
                 }

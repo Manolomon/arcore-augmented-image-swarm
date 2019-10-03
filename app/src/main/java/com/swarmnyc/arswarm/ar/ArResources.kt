@@ -12,7 +12,7 @@ import com.swarmnyc.arswarm.R
 import java.util.concurrent.CompletableFuture
 
 object ArResources {
-    fun init(context: Context): CompletableFuture<Void> {
+    fun init(context: Context, selection: String): CompletableFuture<Void> {
         swarmRendereable = ModelRenderable.builder().setSource(context, Uri.parse("swarm.sfb")).build()
         makeAppRendereable = ModelRenderable.builder().setSource(context, Uri.parse("we-make-app.sfb")).build()
         heartRendereable = ModelRenderable.builder().setSource(context, Uri.parse("heart.sfb")).build()
@@ -26,7 +26,18 @@ object ArResources {
 
 
         val texture = ExternalTexture()
-        videoPlayer = MediaPlayer.create(context, R.raw.video)
+
+        when (selection) {
+            "pez.jpeg" -> {
+                videoPlayer = MediaPlayer.create(context, R.raw.pez)
+            }
+            "paloma.jpg" -> {
+                videoPlayer = MediaPlayer.create(context, R.raw.paloma)
+            }
+            "catrinas.jpg" -> {
+                videoPlayer = MediaPlayer.create(context, R.raw.catrinas)
+            }
+        }
         videoPlayer.setSurface(texture.surface)
         videoPlayer.isLooping = true
 

@@ -10,4 +10,6 @@
         android:layout_height="wrap_content"
         android:scaleType="matrix"
         android:src="@drawable/web_page"/>
+
+
 </ScrollView>

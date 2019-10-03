@@ -2,17 +2,15 @@ package com.swarmnyc.arswarm.ar
 
 import com.swarmnyc.arswarm.utils.Logger
 
-class SwarmAnchorNode : AugmentedImageAnchorNode() {
-    override val imageWidth: Float = 1F // 100 cm
-    override val imageHeight: Float = 0.6667f // 66.7 cm
+class SwarmAnchorNode(override val imageWidth: Float, override val imageHeight: Float) : AugmentedImageAnchorNode() {
 
     private val sceneList = mutableListOf<AugmentedImageNodeGroup>()
     private var currentSceneIndex = 0
 
     override fun onInit() {
-        sceneList.add(SwarmScene1().init(this))
+        //sceneList.add(SwarmScene1().init(this))
         sceneList.add(SwarmScene2().init(this))
-        sceneList.add(SwarmScene3().init(this))
+        //sceneList.add(SwarmScene3().init(this))
     }
 
     override fun onActivate() {

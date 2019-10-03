@@ -51,6 +51,7 @@ dependencies {
 
 // models
 apply plugin: 'com.google.ar.sceneform.plugin'
+apply plugin: 'kotlin-android-extensions'
 
 sceneform.asset('models/swarm.obj',
         'default',

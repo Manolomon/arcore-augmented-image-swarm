@@ -15,7 +15,8 @@ class MainActivity : ArBaseActivity() {
     override val viewId: Int = R.layout.activity_main
 
     override fun startAr() {
-        arFragment = SwarmArFragment()
+        val selection = intent.getStringExtra("selector")
+        arFragment = SwarmArFragment(selection)
 
         supportFragmentManager.beginTransaction().replace(R.id.ar_fragment, arFragment).commit()
 
